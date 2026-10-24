@@ -1,0 +1,13 @@
+{
+  "name": "tequiero-web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Web de Té Quiero Pastelería y Cafetería, con API de reseñas",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

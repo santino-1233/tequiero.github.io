@@ -1,0 +1,79 @@
+[
+  {
+    "id": "seed-daniela-chamorro",
+    "nombre": "Daniela Chamorro",
+    "texto": "Todo muy rico, precios accesibles y el lugar impecable, precioso estilo vintage y delicado. Un hermoso lugar para ir sola o a compartir. Fui con un amigo y nos pedimos el café con leche XXL que no nos defraudó. Todo de 10",
+    "guia_local": true,
+    "opiniones": 16,
+    "fotos": 11,
+    "fecha_texto": "Hace 6 meses",
+    "creada": "",
+    "aprobada": true
+  },
+  {
+    "id": "seed-manuel-hernandez",
+    "nombre": "Manuel Hernández",
+    "texto": "Sin ninguna duda el MEJOR lugar para merendar en Florencio Varela. Buen trato, ambientación impecable y comida espectacular. Pedimos scones dulces y brownies, y las porciones fueron abundantes. Si recorren esta manzana y tienen que elegir entre Té Quiero y Havanna, vengan a este lugar. En calidad son muy superiores a ellos",
+    "guia_local": false,
+    "opiniones": 6,
+    "fotos": 1,
+    "fecha_texto": "Hace 6 meses",
+    "creada": "",
+    "aprobada": true
+  },
+  {
+    "id": "seed-claudia-perez-ortega",
+    "nombre": "Claudia Perez Ortega",
+    "texto": "La ambientación del lugar es hermosa, un espacio encantador, buena pastelería y servicio, precios similares a los de la zona en general. Pequeño detalle: tendrían que estar atentos a cómo huele el jardín exterior, nos queríamos sentar afuera pero olía mal y nos sentamos dentro (según el mozo era por el perro del vecino). Hay productos que repelen el olor.",
+    "guia_local": true,
+    "opiniones": 176,
+    "fotos": 407,
+    "fecha_texto": "Hace 8 meses",
+    "creada": "",
+    "aprobada": true
+  },
+  {
+    "id": "seed-agus-p",
+    "nombre": "Agus P",
+    "texto": "Es un lugar hermoso !!! Comida exquisita, excelente atención. Es la segunda vez que vengo con mi pareja y nos encanta !!! Es un lugar ideal para venir a estudiar, a trabajar, o a despejarse !! Me encanta venir, el mejor lugar de Varela para merendar",
+    "guia_local": false,
+    "opiniones": 6,
+    "fotos": 1,
+    "fecha_texto": "Hace 6 meses",
+    "creada": "",
+    "aprobada": true
+  },
+  {
+    "id": "seed-silvia-ortega",
+    "nombre": "Silvia Ortega",
+    "texto": "Visitar Te quiero es como un viaje al pasado, al patio de la abuelita para disfrutar y comer las exquisiteces que te ofrece el lugar, tanto dulce como salado!!",
+    "guia_local": true,
+    "opiniones": 123,
+    "fotos": 816,
+    "fecha_texto": "Hace 8 meses",
+    "creada": "",
+    "aprobada": true
+  },
+  {
+    "id": "seed-laura-fernandez",
+    "nombre": "Laura Fernandez",
+    "texto": "Es ese lugar con todos los detalles, parece de las casitas de las muñecas, como las de Sara Key. Muy bonita la deco, la atención muy amable y la comida muy rica y de calidad. 10/10.",
+    "guia_local": true,
+    "opiniones": 36,
+    "fotos": 40,
+    "fecha_texto": "Hace 4 meses",
+    "creada": "",
+    "aprobada": true
+  },
+  {
+    "id": "seed-flor-burk",
+    "nombre": "Flor Burk",
+    "texto": "Súper lindo. El lugar es tranquilo y la atención es muy buena. Los precios están como en todos lados. La calle es tranquila y está un poco escondido en el barrio. Muy rico todo y la ambientación es preciosa.",
+    "guia_local": true,
+    "opiniones": 378,
+    "fotos": 2316,
+    "fecha_texto": "Hace un año",
+    "creada": "",
+    "aprobada": true
+  }
+]
