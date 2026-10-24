@@ -1,0 +1,423 @@
+/* =========================================================
+   Menú (scoped dentro de .menu-app para no chocar con la web)
+   Color principal: verde menta #8CCDB7
+   Títulos: Playfair Display | Textos y precios: Inter
+   ========================================================= */
+
+.menu-app,
+.menu-app * {
+  box-sizing: border-box;
+}
+
+.menu-app {
+  background-color: var(--mint);
+  color: var(--texto);
+  font-family: var(--font-texto);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  position: relative;
+  isolation: isolate;
+}
+
+/* Formas flotando de fondo */
+.menu-app::before,
+.menu-app::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: deriva 16s ease-in-out infinite alternate;
+}
+
+.menu-app::before {
+  width: min(560px, 110vw);
+  height: min(560px, 110vw);
+  top: -180px;
+  right: -160px;
+  background: var(--mint-claro);
+  opacity: 0.7;
+}
+
+.menu-app::after {
+  width: min(480px, 100vw);
+  height: min(480px, 100vw);
+  bottom: 10%;
+  left: -180px;
+  background: var(--rosa-suave);
+  opacity: 0.8;
+  animation-delay: -7s;
+}
+
+/* ---------- Encabezado del menú ---------- */
+
+.menu-app .menu-hero {
+  text-align: center;
+  padding: 3.8rem 1.25rem 2.4rem;
+}
+
+.menu-app .hero-contenido {
+  max-width: 640px;
+  margin: 0 auto;
+  animation: aparecer 1s var(--ease) both;
+}
+
+.menu-app .hero-script {
+  font-family: var(--font-titulo);
+  font-style: italic;
+  font-size: 1.4rem;
+  color: var(--texto);
+  margin-bottom: 0.4rem;
+}
+
+.menu-app .menu-hero h1 {
+  font-family: var(--font-titulo);
+  font-weight: 600;
+  font-size: clamp(2.5rem, 7vw, 3.8rem);
+  letter-spacing: 0.005em;
+  color: var(--texto);
+  margin: 0.3rem 0 0.6rem;
+  line-height: 1.05;
+}
+
+.menu-app .ornamento {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.menu-app .ornamento span {
+  width: 64px;
+  height: 1.5px;
+  background: var(--texto);
+  opacity: 0.35;
+  transform-origin: center;
+  animation: crecer 1.2s 0.4s var(--ease) both;
+}
+
+.menu-app .corazon {
+  width: 20px;
+  height: 20px;
+  fill: var(--rosa);
+  animation: latido 2.4s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.menu-app .estado {
+  margin-top: 1.2rem;
+  font-size: 0.9rem;
+  color: var(--texto);
+  opacity: 0.8;
+}
+
+.menu-app .estado.error {
+  color: #7a1f1f;
+  opacity: 1;
+  font-weight: 600;
+}
+
+/* ---------- Navegación de categorías (pastillas) ---------- */
+
+.menu-app .navegacion {
+  position: sticky;
+  top: var(--header-h, 84px);
+  z-index: 10;
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 0.9rem 1rem;
+  background: rgba(140, 205, 183, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 20px rgba(33, 33, 33, 0.06);
+}
+
+.menu-app .navegacion::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 760px) {
+  .menu-app .navegacion {
+    justify-content: center;
+  }
+}
+
+.menu-app .navegacion a {
+  flex-shrink: 0;
+  white-space: nowrap;
+  text-decoration: none;
+  color: var(--texto);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.5rem 1.1rem;
+  border-radius: 999px;
+  background: var(--blanco, #fff);
+  box-shadow: 0 3px 10px rgba(33, 33, 33, 0.08);
+  transition: transform 0.3s var(--ease-rebote), background-color 0.2s ease, color 0.2s ease;
+}
+
+.menu-app .navegacion a:hover,
+.menu-app .navegacion a:focus-visible {
+  transform: translateY(-2px);
+  background: var(--texto);
+  color: var(--blanco, #fff);
+}
+
+/* ---------- Lista del menú ---------- */
+
+.menu-app .menu {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0.5rem 1.5rem 2rem;
+}
+
+.menu-app .categoria {
+  padding: 3.2rem 0 1rem;
+  scroll-margin-top: calc(var(--header-h, 84px) + 4rem);
+}
+
+.menu-app .categoria h2 {
+  font-family: var(--font-titulo);
+  font-weight: 600;
+  font-size: clamp(1.9rem, 4.5vw, 2.4rem);
+  text-align: center;
+  color: var(--texto);
+  margin-bottom: 1.6rem;
+}
+
+.menu-app .categoria h2::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 3px;
+  margin: 0.7rem auto 0;
+  border-radius: 3px;
+  background: var(--rosa);
+  transform-origin: center;
+  animation: crecer 0.9s 0.2s var(--ease) both;
+}
+
+.menu-app .subcategoria {
+  font-family: var(--font-titulo);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.4rem;
+  color: var(--texto);
+  margin: 2rem 0 0.6rem;
+  text-align: center;
+}
+
+.menu-app .subcategoria::before,
+.menu-app .subcategoria::after {
+  content: "·";
+  margin: 0 0.6rem;
+  color: var(--rosa);
+}
+
+/* Cada plato es una tarjeta que entra con un leve retraso */
+.menu-app .item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  padding: 1.1rem 1.4rem;
+  background: var(--cream);
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(33, 33, 33, 0.07);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
+  animation: aparecer 0.7s var(--ease) both;
+}
+
+/* Escalonado de entrada */
+.menu-app .item:nth-child(2) { animation-delay: 0.05s; }
+.menu-app .item:nth-child(3) { animation-delay: 0.1s; }
+.menu-app .item:nth-child(4) { animation-delay: 0.15s; }
+.menu-app .item:nth-child(5) { animation-delay: 0.2s; }
+.menu-app .item:nth-child(6) { animation-delay: 0.25s; }
+.menu-app .item:nth-child(7) { animation-delay: 0.3s; }
+.menu-app .item:nth-child(n+8) { animation-delay: 0.35s; }
+
+/* Franja de color a la izquierda que aparece al pasar el mouse */
+.menu-app .item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  background: var(--rosa);
+  transform: scaleY(0);
+  transition: transform 0.35s var(--ease);
+}
+
+.menu-app .item:hover {
+  transform: translateX(6px);
+  box-shadow: 0 12px 26px rgba(33, 33, 33, 0.12);
+}
+
+.menu-app .item:hover::before {
+  transform: scaleY(1);
+}
+
+.menu-app .item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.menu-app .item-nombre {
+  font-family: var(--font-texto);
+  font-weight: 700;
+  font-size: 1.02rem;
+  color: var(--texto);
+}
+
+.menu-app .item-descripcion {
+  font-size: 0.9rem;
+  color: var(--texto-suave);
+  margin-top: 0.25rem;
+}
+
+.menu-app .item-precio {
+  font-family: var(--font-texto);
+  font-weight: 700;
+  font-size: 1.05rem;
+  white-space: nowrap;
+  color: var(--texto);
+  background: var(--mint-suave);
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+}
+
+/* Sello Sin TACC */
+.menu-app .badge-sin-tacc {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-left: 0.6rem;
+  vertical-align: middle;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--texto);
+  background: var(--mint);
+  padding: 0.18rem 0.6rem;
+  border-radius: 999px;
+}
+
+.menu-app .badge-sin-tacc svg {
+  width: 11px;
+  height: 11px;
+  fill: none;
+  stroke: var(--texto);
+  stroke-width: 1.6;
+}
+
+/* Agotado */
+.menu-app .item.agotado {
+  background: rgba(255, 253, 249, 0.6);
+  box-shadow: none;
+}
+
+.menu-app .item.agotado .item-nombre,
+.menu-app .item.agotado .item-precio,
+.menu-app .item.agotado .item-descripcion {
+  color: #8a8a8a;
+  text-decoration: line-through;
+}
+
+.menu-app .item.agotado .item-precio {
+  background: transparent;
+}
+
+.menu-app .badge-agotado {
+  display: inline-block;
+  margin-left: 0.6rem;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #7a1f1f;
+  background: var(--rosa-suave);
+  padding: 0.18rem 0.6rem;
+  border-radius: 999px;
+  vertical-align: middle;
+}
+
+/* ---------- Pie del menú ---------- */
+
+.menu-app .menu-pie {
+  position: relative;
+  text-align: center;
+  padding: 3rem 1rem 4.5rem;
+}
+
+.menu-app .menu-pie__texto {
+  font-size: 0.85rem;
+  color: var(--texto);
+  letter-spacing: 0.03em;
+  margin-bottom: 1.6rem;
+}
+
+/* ---------- Animaciones ---------- */
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes crecer {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes latido {
+  0%, 100% { transform: scale(1); }
+  15% { transform: scale(1.18); }
+  30% { transform: scale(1); }
+  45% { transform: scale(1.12); }
+}
+
+@keyframes deriva {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(-40px, 30px) scale(1.08); }
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 480px) {
+  .menu-app .menu-hero {
+    padding: 2.8rem 1rem 2rem;
+  }
+
+  .menu-app .menu {
+    padding: 0.5rem 1.1rem 2rem;
+  }
+
+  .menu-app .categoria h2 {
+    font-size: 1.8rem;
+  }
+
+  .menu-app .subcategoria {
+    font-size: 1.2rem;
+  }
+
+  .menu-app .item {
+    padding: 0.95rem 1rem;
+  }
+
+  .menu-app .item-nombre,
+  .menu-app .item-precio {
+    font-size: 0.96rem;
+  }
+}
