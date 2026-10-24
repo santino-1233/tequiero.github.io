@@ -137,7 +137,9 @@
         </div>
 
         <div class="resena-form-wrap">
-          <form id="resenaForm" class="resena-form" novalidate>
+          <form id="resenaForm" class="resena-form" name="resenas" method="POST" data-netlify="true" netlify-honeypot="web" novalidate>
+            <!-- Netlify Forms: identifica el formulario al desplegar -->
+            <input type="hidden" name="form-name" value="resenas">
             <h3>Dejá tu reseña</h3>
 
             <label for="resenaNombre">Tu nombre</label>

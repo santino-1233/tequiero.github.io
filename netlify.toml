@@ -1,0 +1,4 @@
+# Sitio estático en Netlify: no hay comando de build y se publica la raíz del repo
+[build]
+  publish = "."
+  command = ""

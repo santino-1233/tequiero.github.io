@@ -1,8 +1,8 @@
 /* =========================================================
-   Té Quiero Pastelería - Reseñas
-   1. Carga las reseñas publicadas desde /api/resenas
-   2. Envía nuevas reseñas a /api/resenas (quedan pendientes de revisión)
-   Todo el contenido se inserta con textContent (sin innerHTML), para evitar XSS.
+   Té Quiero Pastelería - Reseñas (versión estática para Netlify)
+   1. Lee las reseñas aprobadas desde data/resenas.json
+   2. Envía nuevas reseñas con Netlify Forms (quedan en el panel de Netlify)
+   Todo el contenido se inserta con textContent (sin innerHTML).
    ========================================================= */
 
 (function () {
@@ -26,13 +26,6 @@
       .map(function (parte) { return parte.charAt(0); })
       .join("")
       .toUpperCase();
-  }
-
-  function formatearFecha(iso) {
-    if (!iso) return "";
-    var fecha = new Date(iso);
-    if (isNaN(fecha.getTime())) return "";
-    return fecha.toLocaleDateString("es-AR", { day: "numeric", month: "long", year: "numeric" });
   }
 
   function crearEtiqueta(tag, clase, texto) {
@@ -74,13 +67,9 @@
     head.appendChild(avatar);
     head.appendChild(datos);
 
-    var texto = crearEtiqueta("p", "resena__texto", r.texto);
-
-    var fecha = r.fecha_texto || formatearFecha(r.creada);
-
     card.appendChild(head);
-    card.appendChild(texto);
-    if (fecha) card.appendChild(crearEtiqueta("p", "resena__fecha", fecha));
+    card.appendChild(crearEtiqueta("p", "resena__texto", r.texto));
+    if (r.fecha_texto) card.appendChild(crearEtiqueta("p", "resena__fecha", r.fecha_texto));
 
     return card;
   }
@@ -88,7 +77,7 @@
   function render(lista) {
     grid.innerHTML = "";
 
-    if (!Array.isArray(lista) || lista.length === 0) {
+    if (!lista.length) {
       estado.textContent = "Todavía no hay reseñas publicadas. ¡Sé la primera!";
       estado.hidden = false;
       return;
@@ -101,19 +90,22 @@
   }
 
   function cargarResenas() {
-    fetch("/api/resenas", { headers: { Accept: "application/json" } })
+    // Solo se muestran las aprobadas (aprobada: true en data/resenas.json)
+    fetch("data/resenas.json", { cache: "no-cache" })
       .then(function (respuesta) {
         if (!respuesta.ok) throw new Error("HTTP " + respuesta.status);
         return respuesta.json();
       })
-      .then(render)
+      .then(function (lista) {
+        render(lista.filter(function (r) { return r.aprobada === true; }));
+      })
       .catch(function () {
         estado.textContent = "No pudimos cargar las reseñas en este momento. Podés leerlas en Google Maps.";
         estado.hidden = false;
       });
   }
 
-  /* ---------- Formulario ---------- */
+  /* ---------- Formulario (Netlify Forms) ---------- */
 
   function setMensaje(texto, tipo) {
     if (!mensaje) return;
@@ -121,43 +113,44 @@
     mensaje.className = "resena-form__msg" + (tipo ? " is-" + tipo : "");
   }
 
+  function validar(nombre, texto) {
+    if (nombre.trim().length < 2) return "Escribí tu nombre (mínimo 2 letras).";
+    if (texto.trim().length < 10) return "Contanos un poco más (mínimo 10 caracteres).";
+    return "";
+  }
+
   if (form) {
     form.addEventListener("submit", function (e) {
       e.preventDefault();
 
-      var datos = {
-        nombre: form.elements.nombre.value,
-        texto: form.elements.texto.value,
-        web: form.elements.web.value, // campo trampa
-      };
+      var nombre = form.elements.nombre.value;
+      var texto = form.elements.texto.value;
+
+      var error = validar(nombre, texto);
+      if (error) {
+        setMensaje(error, "error");
+        return;
+      }
 
       setMensaje("", "");
       boton.disabled = true;
       boton.textContent = "Enviando…";
 
-      fetch("/api/resenas", {
+      // Netlify Forms recibe los datos como formulario codificado y los guarda en el panel
+      var cuerpo = new URLSearchParams(new FormData(form)).toString();
+
+      fetch("/", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(datos),
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: cuerpo,
       })
         .then(function (respuesta) {
-          return respuesta
-            .json()
-            .catch(function () { return {}; })
-            .then(function (cuerpo) {
-              return { ok: respuesta.ok, cuerpo: cuerpo };
-            });
-        })
-        .then(function (res) {
-          if (res.ok) {
-            form.reset();
-            setMensaje(res.cuerpo.mensaje || "¡Gracias por tu reseña!", "ok");
-          } else {
-            setMensaje(res.cuerpo.error || "No se pudo enviar. Intentá de nuevo.", "error");
-          }
+          if (!respuesta.ok) throw new Error("HTTP " + respuesta.status);
+          form.reset();
+          setMensaje("¡Gracias! Tu reseña se publica después de revisarla.", "ok");
         })
         .catch(function () {
-          setMensaje("No pudimos conectarnos. Intentá de nuevo más tarde.", "error");
+          setMensaje("No pudimos enviar tu reseña. Intentá de nuevo más tarde.", "error");
         })
         .then(function () {
           boton.disabled = false;
