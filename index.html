@@ -137,9 +137,7 @@
         </div>
 
         <div class="resena-form-wrap">
-          <form id="resenaForm" class="resena-form" name="resenas" method="POST" data-netlify="true" netlify-honeypot="web" novalidate>
-            <!-- Netlify Forms: identifica el formulario al desplegar -->
-            <input type="hidden" name="form-name" value="resenas">
+          <form id="resenaForm" class="resena-form" method="POST" action="https://formspree.io/f/xjyygvod" novalidate>
             <h3>Dejá tu reseña</h3>
 
             <label for="resenaNombre">Tu nombre</label>
@@ -148,8 +146,8 @@
             <label for="resenaTexto">Tu opinión</label>
             <textarea id="resenaTexto" name="texto" rows="4" maxlength="600" required></textarea>
 
-            <!-- Campo trampa para bots: no completar -->
-            <input class="hp" name="web" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <!-- Campo trampa para bots: no completar (Formspree lo usa como filtro de spam) -->
+            <input class="hp" name="_gotcha" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
 
             <button class="btn btn--primary" type="submit" id="resenaEnviar">Enviar reseña</button>
             <p id="resenaMensaje" class="resena-form__msg" role="status"></p>

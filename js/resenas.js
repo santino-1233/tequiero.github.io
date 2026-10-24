@@ -1,12 +1,15 @@
 /* =========================================================
-   Té Quiero Pastelería - Reseñas (versión estática para Netlify)
+   Té Quiero Pastelería - Reseñas (versión estática para GitHub Pages)
    1. Lee las reseñas aprobadas desde data/resenas.json
-   2. Envía nuevas reseñas con Netlify Forms (quedan en el panel de Netlify)
+   2. Envía nuevas reseñas a Formspree (llegan por mail y quedan en el panel de Formspree)
    Todo el contenido se inserta con textContent (sin innerHTML).
    ========================================================= */
 
 (function () {
   "use strict";
+
+  // Pegá acá la URL de tu formulario de Formspree (la conseguís al crear el formulario en formspree.io)
+  var FORMULARIO_URL = "https://formspree.io/f/xjyygvod";
 
   var grid = document.getElementById("resenasGrid");
   var estado = document.getElementById("resenasEstado");
@@ -105,7 +108,7 @@
       });
   }
 
-  /* ---------- Formulario (Netlify Forms) ---------- */
+  /* ---------- Formulario (Formspree) ---------- */
 
   function setMensaje(texto, tipo) {
     if (!mensaje) return;
@@ -132,17 +135,20 @@
         return;
       }
 
+      if (FORMULARIO_URL.indexOf("TU_ID_AQUI") !== -1) {
+        setMensaje("El formulario todavía no está configurado.", "error");
+        return;
+      }
+
       setMensaje("", "");
       boton.disabled = true;
       boton.textContent = "Enviando…";
 
-      // Netlify Forms recibe los datos como formulario codificado y los guarda en el panel
-      var cuerpo = new URLSearchParams(new FormData(form)).toString();
-
-      fetch("/", {
+      // Formspree recibe los datos del formulario y responde en JSON
+      fetch(FORMULARIO_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: cuerpo,
+        headers: { Accept: "application/json" },
+        body: new FormData(form),
       })
         .then(function (respuesta) {
           if (!respuesta.ok) throw new Error("HTTP " + respuesta.status);
